@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Cognitive Partners — Gerry Goldsborough, Mar 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0d;
+    --paper: #f5f2ec;
+    --cream: #ede9e0;
+    --claude-col:  #c8785a;
+    --gpt-col:     #5a7ec8;
+    --grok-col:    #2a2a2a;
+    --copilot-col: #00a67e;
+    --gemini-col:  #b8860b;
+    --rule: #c8bfae;
+    --note: #7a7468;
+    --highlight: #f7e9c4;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    padding: 48px 16px 80px;
+    min-height: 100vh;
+  }
+  .masthead {
+    max-width: 1320px;
+    margin: 0 auto 44px;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 24px;
+  }
+  .overline {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--note);
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 14px;
+  }
+  h1 .cl  { color: var(--claude-col);  font-style: italic; }
+  h1 .gpt { color: var(--gpt-col);     font-style: italic; }
+  h1 .grk { color: var(--grok-col);    font-style: italic; }
+  h1 .cop { color: var(--copilot-col); font-style: italic; }
+  h1 .gem { color: var(--gemini-col);  font-style: italic; }
+  .deck {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--note);
+    max-width: 760px;
+    font-weight: 300;
+  }
+  .deck strong { color: var(--ink); font-weight: 500; }
+  .legend {
+    display: flex;
+    gap: 24px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.05em;
+  }
+  .legend-dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .table-wrap {
+    max-width: 1320px;
+    margin: 0 auto;
+    overflow-x: auto;
+  }
+  table { width: 100%; border-collapse: collapse; }
+  thead tr th {
+    padding: 12px 12px;
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--note);
+    border-bottom: 2px solid var(--ink);
+    background: var(--paper);
+    white-space: nowrap;
+  }
+  th.col-claude  { color: var(--claude-col); }
+  th.col-gpt     { color: var(--gpt-col); }
+  th.col-grok    { color: var(--grok-col); }
+  th.col-copilot { color: var(--copilot-col); }
+  th.col-gemini  { color: var(--gemini-col); }
+  tbody tr {
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.15s;
+  }
+  tbody tr:hover { background: var(--cream); }
+  td {
+    padding: 16px 12px;
+    vertical-align: top;
+    font-size: 12.5px;
+    line-height: 1.68;
+  }
+  td.col-principle {
+    width: 9%;
+    font-family: var(--serif);
+    font-size: 13px;
+    line-height: 1.25;
+    color: var(--ink);
+    padding-right: 10px;
+  }
+  td.col-claude  { width: 17%; border-left: 3px solid var(--claude-col);  padding-left: 12px; color: #2a1a12; }
+  td.col-gpt     { width: 17%; border-left: 3px solid var(--gpt-col);     padding-left: 12px; color: #101826; }
+  td.col-grok    { width: 17%; border-left: 3px solid var(--grok-col);    padding-left: 12px; color: #1a1a1a; }
+  td.col-copilot { width: 17%; border-left: 3px solid var(--copilot-col); padding-left: 12px; color: #0a1f19; }
+  td.col-gemini  { width: 17%; border-left: 3px solid var(--gemini-col);  padding-left: 12px; color: #2a1f00; }
+  td.col-verdict {
+    width: 6%;
+    padding: 16px 8px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    color: var(--note);
+    vertical-align: middle;
+    text-align: center;
+  }
+  .badge {
+    display: inline-block;
+    padding: 3px 7px;
+    border-radius: 3px;
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+  .badge-claude  { background: #f5e0d8; color: var(--claude-col); }
+  .badge-gpt     { background: #d8e4f5; color: var(--gpt-col); }
+  .badge-grok    { background: #e8e8e8; color: #2a2a2a; }
+  .badge-copilot { background: #d4f0e8; color: var(--copilot-col); }
+  .badge-gemini  { background: #f5ead0; color: var(--gemini-col); }
+  .badge-tie     { background: var(--cream); color: var(--note); }
+  .badge-context { background: var(--highlight); color: #7a5c10; }
+  .callout {
+    display: block;
+    background: var(--highlight);
+    border-left: 2px solid #c8a03a;
+    padding: 4px 9px;
+    border-radius: 0 3px 3px 0;
+    font-size: 11.5px;
+    margin-top: 6px;
+    color: #5a4010;
+  }
+  .caution {
+    display: block;
+    background: #fdecea;
+    border-left: 2px solid #c85a5a;
+    padding: 4px 9px;
+    border-radius: 0 3px 3px 0;
+    font-size: 11.5px;
+    margin-top: 6px;
+    color: #7a1a1a;
+  }
+  .fun {
+    display: block;
+    background: #eef7f0;
+    border-left: 2px solid var(--copilot-col);
+    padding: 4px 9px;
+    border-radius: 0 3px 3px 0;
+    font-size: 11.5px;
+    margin-top: 6px;
+    color: #0a3a28;
+  }
+  .footnote {
+    max-width: 1320px;
+    margin: 32px auto 0;
+    border-top: 1px solid var(--rule);
+    padding-top: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .footnote-text {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--note);
+    line-height: 1.9;
+    flex: 1;
+    min-width: 260px;
+  }
+  .footnote-author {
+    font-family: var(--serif);
+    font-size: 15px;
+    color: var(--ink);
+    text-align: right;
+    white-space: nowrap;
+  }
+  .footnote-author span {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--note);
+    margin-top: 3px;
+  }
+  @media (max-width: 900px) {
+    td, th { padding: 10px 7px; font-size: 11px; }
+    td.col-principle { font-size: 12px; }
+    .footnote { flex-direction: column; }
+    .footnote-author { text-align: left; }
+  }
+</style>
+</head>
+<body>
+<div class="masthead">
+  <div class="overline">Practitioner's Field Notes · Legal AI Engineering · Mar 2026</div>
+  <h1>
+    <span class="cl">Claude</span> ·
+    <span class="gpt">ChatGPT</span> ·
+    <span class="grk">Grok</span> ·
+    <span class="cop">Copilot</span> ·
+    <span class="gem">Gemini</span><br>
+    What Actually Matters in Production
+  </h1>
+  <p class="deck">
+    These aren't chatbots. They're <strong>cognitive partners</strong> — each with a different disposition,
+    risk posture, and sweet spot. I interact with all of them daily while building and deploying agentic legal
+    workflows at scale. Here's my honest read. And yes, Copilot is here too — Clippy's chaotic nephew who
+    just doesn't know much of anything. 😂
+  </p>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--claude-col)"></div>Claude (Anthropic)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--gpt-col)"></div>ChatGPT (OpenAI)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--grok-col)"></div>Grok (xAI)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--copilot-col)"></div>Copilot (Microsoft)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--gemini-col)"></div>Gemini (Google)</div>
+  </div>
+</div>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>Principle</th>
+      <th class="col-claude">🔴 Claude</th>
+      <th class="col-gpt">🔵 ChatGPT</th>
+      <th class="col-grok">⚫ Grok</th>
+      <th class="col-copilot">🟢 Copilot</th>
+      <th class="col-gemini">🟡 Gemini</th>
+      <th>Edge</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="col-principle">Training Philosophy</td>
+      <td class="col-claude">
+        Constitutional AI — explicit principles around honesty, harm avoidance, and epistemic integrity.
+        Behavior reflects design intent, not just an optimization target.
+      </td>
+      <td class="col-gpt">
+        RLHF — optimized for responses that feel satisfying to human raters. Polished and agreeable,
+        but the loop rewards pleasing over truth-telling.
+      </td>
+      <td class="col-grok">
+        RL at scale with a stated "truth-seeking" mission. Trained heavily on X platform data.
+        In practice, shown political drift and defers to its owner's views on contested topics.
+        <div class="caution">Training data sourcing remains opaque.</div>
+      </td>
+      <td class="col-copilot">
+        Built on OpenAI models (GPT-4 class) fine-tuned for Microsoft's enterprise context.
+        Safety guardrails exist but lag behind Anthropic and OpenAI in published transparency.
+      </td>
+      <td class="col-gemini">
+        Google's RLHF + safety-focused tuning across a massive multimodal corpus.
+        Solid published safety frameworks and fewer documented wild swings than Grok.
+      </td>
+      <td class="col-verdict"><span class="badge badge-context">Depends</span></td>
+    </tr>
+    <tr>
+      <td class="col-principle">Response Character</td>
+      <td class="col-claude">
+        Pushes back. Flags faulty assumptions. Tells you what you need to hear, not what you want.
+        Concise by default — no padding.
+        <div class="callout">Fewer silent failures in agentic workflows.</div>
+      </td>
+      <td class="col-gpt">
+        Warm, expansive, agreeable. Documented sycophancy tendency — over-elaborates and affirms.
+        You often need to explicitly ask for critique.
+      </td>
+      <td class="col-grok">
+        "Rebellious" and direct by design — the anti-sycophancy original. Voice modes include
+        an "unhinged" setting. Think Mode produces more sober, analytical output.
+      </td>
+      <td class="col-copilot">
+        Professionally restrained by default — but prone to hallucinating with full confidence.
+        Will invent spreadsheet formulas, cite fake sources, and spiral without warning.
+        <div class="caution">Hallucination rate in document contexts is a real liability.</div>
+      </td>
+      <td class="col-gemini">
+        Measured and thorough. Less prone to dramatic hallucination than Copilot. Can be
+        verbose but generally stays on-task without the sycophantic over-warmth of GPT.
+      </td>
+      <td class="col-verdict"><span class="badge badge-claude">Claude</span></td>
+    </tr>
+    <tr>
+      <td class="col-principle">Prompting Style</td>
+      <td class="col-claude">
+        Responds markedly better to <em>situational framing</em> over bare commands.
+        Rich context unlocks strategic reasoning — it evaluates whether you're solving the right problem.
+      </td>
+      <td class="col-gpt">
+        Responds well to direct commands. Additional context yields a more elaborate version
+        of exactly what was asked — useful for execution, less useful for reframing.
+      </td>
+      <td class="col-grok">
+        Well-suited to direct, technical commands. Strongest when math, science, or code
+        precision matters more than situational reframing.
+      </td>
+      <td class="col-copilot">
+        Optimized for Office-native prompts ("summarize this email," "draft a response").
+        Outside its native context, prompting feels like fighting the guardrails.
+      </td>
+      <td class="col-gemini">
+        Handles both direct commands and richer contextual prompts well — especially
+        when working across Google Workspace assets (Docs, Sheets, Drive).
+      </td>
+      <td class="col-verdict"><span class="badge badge-claude">Claude</span></td>
+    </tr>
+    <tr>
+      <td class="col-principle">Writing & Content</td>
+      <td class="col-claude">
+        Excellent editor and refiner. Prose reads like a human wrote it — strong structural judgment,
+        no AI voice. Longer-form generation needs explicit length cues.
+      </td>
+      <td class="col-gpt">
+        Strong first-draft engine but prone to a recognizable "AI voice" and sentence-level polish
+        over structural coherence. Users often say "that's not what I wanted."
+      </td>
+      <td class="col-grok">
+        Scores ~6/10 in independent creativity benchmarks. Better for technical summarization
+        and data synthesis than original writing or narrative content.
+      </td>
+      <td class="col-copilot">
+        Drafts emails and meeting summaries adequately in Office context.
+        Original writing quality is thin — and it can silently corrupt document structure.
+        <div class="fun">It once rewrote a contract summary in bullet points. No one asked. 🙃</div>
+      </td>
+      <td class="col-gemini">
+        Capable writer — especially useful for drafting within Google Docs where it
+        has direct document context. Not as natural as Claude but less "AI-flavored" than GPT.
+      </td>
+      <td class="col-verdict"><span class="badge badge-claude">Claude</span></td>
+    </tr>
+    <tr>
+      <td class="col-principle">Reasoning Depth</td>
+      <td class="col-claude">
+        Extended thinking mode exposes the chain of reasoning step-by-step — you can intervene
+        and redirect mid-process. Genuine workflow advantage for complex legal or technical problems.
+      </td>
+      <td class="col-gpt">
+        Reasoning happens behind the curtain. Submit, wait, receive.
+        Less surface area for steering mid-thought.
+      </td>
+      <td class="col-grok">
+        Think Mode + Big Brain Mode allocate additional compute for hard problems.
+        93%+ on AIME 2025, 84% on GPQA. xAI intentionally obscures some reasoning steps.
+        <div class="callout">Best-in-class for STEM-heavy reasoning tasks.</div>
+      </td>
+      <td class="col-copilot">
+        Fine for quick logic tasks in Office context. Outside that lane, it confidently
+        produces wrong answers, fabricates citations, and occasionally spirals into
+        a 500-word non-answer.
+        <div class="caution">Therapy may be required after a Copilot reasoning session. 😂</div>
+      </td>
+      <td class="col-gemini">
+        Major recent leaps — 77%+ on ARC-AGI-2, record GPQA performance.
+        Deep Think mode handles complex and abstract reasoning well.
+        <div class="callout">Crushes large-scale abstract and multi-step reasoning.</div>
+      </td>
+      <td class="col-verdict"><span class="badge badge-tie">Split</span></td>
+    </tr>
+    <tr>
+      <td class="col-principle">Real-Time Data</td>
+      <td class="col-claude">
+        Web search available as a tool call — not natively fused into the model's substrate.
+        Functional but not a live-data-first architecture.
+      </td>
+      <td class="col-gpt">
+        Solid broad web research. Good general coverage — depth can vary by domain.
+      </td>
+      <td class="col-grok">
+        Native X (Twitter) integration gives a genuine real-time edge for breaking news,
+        trends, and social signal analysis. DeepSearch + DeeperSearch extend with
+        reasoning over live data.
+        <div class="callout">Best for current events and social intelligence.</div>
+      </td>
+      <td class="col-copilot">
+        Relies on Bing Search integration — decent breadth for general web content,
+        not strong for social/real-time signals. Results can be inconsistent.
+      </td>
+      <td class="col-gemini">
+        Google Search grounding gives strong, fast, accurate web results.
+        Excellent for factual research — not as socially attuned as Grok's X feed.
+      </td>
+      <td class="col-verdict"><span class="badge badge-grok">Grok</span></td>
+    </tr>
+    <tr>
+      <td class="col-principle">Projects & Instruction Compliance</td>
+      <td class="col-claude">
+        Rewards detailed, system-level instruction design. ~94% exact instruction compliance.
+        Built for disciplined, specification-driven workflows with minimal drift.
+        <div class="callout">Core reason Claude Code is my daily driver.</div>
+      </td>
+      <td class="col-gpt">
+        Projects work but often used like file cabinets. ~87% instruction compliance.
+        More prone to drift on complex, multi-constraint instructions.
+      </td>
+      <td class="col-grok">
+        Grok Studio provides a collaborative workspace with session memory.
+        Instruction-following in enterprise agentic contexts is less battle-tested.
+      </td>
+      <td class="col-copilot">
+        Tightly scoped to Microsoft 365 workflows. Does well inside those rails —
+        but system-level customization and instruction compliance are limited compared
+        to API-first tools.
+      </td>
+      <td class="col-gemini">
+        Gemini for Workspace handles multi-step instructions well within Google's
+        ecosystem. Cross-session memory improving but not yet at Claude's level for
+        complex agentic workflows.
+      </td>
+      <td class="col-verdict"><span class="badge badge-claude">Claude</span></td>
+    </tr>
+    <tr>
+      <td class="col-principle">Productivity Integration</td>
+      <td class="col-claude">
+        Best-in-class standalone and API agent. Claude in Excel and Claude in PowerPoint
+        extend into Office. No native suite lock-in — works across any stack.
+      </td>
+      <td class="col-gpt">
+        Flexible API and consumer surface. No native office suite integration — you
+        bring it in yourself. Works well but requires deliberate wiring.
+      </td>
+      <td class="col-grok">
+        Browser and X-focused. Grok Studio is useful for developers. Limited
+        native integration with enterprise productivity suites.
+      </td>
+      <td class="col-copilot">
+        Lives inside Microsoft 365. Drafts emails, summarizes meetings, generates
+        slides — when it doesn't ghost you or corrupt your file.
+        <div class="fun">Best AI for the "I didn't ask for this but okay" experience. 😂</div>
+      </td>
+      <td class="col-gemini">
+        Deep Google Workspace integration — Sheets analysis, Drive doc summarization,
+        Gmail drafting. Seamless if you're in the Google ecosystem.
+        <div class="callout">Best productivity integration for Google shops.</div>
+      </td>
+      <td class="col-verdict"><span class="badge badge-context">Ecosystem-dependent</span></td>
+    </tr>
+    <tr>
+      <td class="col-principle">Desktop & Agentic</td>
+      <td class="col-claude">
+        Co-work desktop agent opens, reads, edits, and organizes files — multi-step tasks
+        directly on your machine. Repositions AI from conversation partner to actual worker.
+      </td>
+      <td class="col-gpt">
+        Conversational partner. Does not operate on your local filesystem or execute
+        multi-step desktop tasks natively.
+      </td>
+      <td class="col-grok">
+        No local desktop agent. Grok Studio is browser-based. Agentic API capabilities
+        exist but are primarily developer-facing.
+      </td>
+      <td class="col-copilot">
+        Can automate within Office apps via Copilot Actions. Limited to the Microsoft
+        ecosystem — no broader desktop agent capability.
+      </td>
+      <td class="col-gemini">
+        Project Mariner and Gemini API agents are advancing. Growing agentic capability
+        but not yet at Claude's Co-work level for local desktop workflows.
+      </td>
+      <td class="col-verdict"><span class="badge badge-claude">Claude</span></td>
+    </tr>
+    <tr>
+      <td class="col-principle">Multimodal & Context</td>
+      <td class="col-claude">
+        Strong documents and code. Limited native multimodal — no image/video generation.
+        No real-time voice. Focused, not sprawling.
+      </td>
+      <td class="col-gpt">
+        Image generation, video via Sora, real-time voice, custom GPTs marketplace.
+        Good but not always natively fused — often tool-call stitched.
+      </td>
+      <td class="col-grok">
+        Image generation and editing, voice modes, 3D companion characters.
+        Fun personalities. Grok 4 adds multi-agent "Heavy" variant for complex tasks.
+      </td>
+      <td class="col-copilot">
+        Basic image handling in Office. Image generation via Designer.
+        Performance is often underwhelming — "meh" is the right word.
+      </td>
+      <td class="col-gemini">
+        Native multimodal king — text, images, audio, video, and code in a single flow.
+        1–2M token context window handles massive documents and codebases.
+        Can analyze YouTube videos directly — Q&amp;A, summaries, and key moments — even without a manual transcript, via Google's native caption infrastructure.
+        <div class="callout">Best-in-class context window, native multimodal fusion, and the only model with native YouTube comprehension.</div>
+      </td>
+      <td class="col-verdict"><span class="badge badge-gemini">Gemini</span></td>
+    </tr>
+    <tr>
+      <td class="col-principle">Trust & Governance</td>
+      <td class="col-claude">
+        Anthropic publishes detailed safety research, model cards, and Constitutional AI methodology.
+        Consistent, well-documented guardrails.
+        <div class="callout">My go-to for client-facing legal work.</div>
+      </td>
+      <td class="col-gpt">
+        OpenAI publishes usage policies and safety evals. Some sycophancy issues documented
+        but overall a predictable enterprise governance posture.
+      </td>
+      <td class="col-grok">
+        Antisemitic outputs, praise of historical figures, politically shifting system prompts,
+        and the model consulting its owner's views on contested topics. Regulatory actions from
+        EU, 37 US state AGs, and California.
+        <div class="caution">Not deploying this in regulated workflows without serious guardrails.</div>
+      </td>
+      <td class="col-copilot">
+        Strong Microsoft enterprise security posture and compliance certifications.
+        But the model hallucinates wildly in document contexts — security without accuracy
+        is only half the equation.
+        <div class="caution">Don't let it near final deliverables unsupervised.</div>
+      </td>
+      <td class="col-gemini">
+        Solid Google safety frameworks, published transparency reports, fewer reported
+        incidents of dramatic failure. Improving steadily and fewer wild swings than
+        Grok or Copilot.
+      </td>
+      <td class="col-verdict"><span class="badge badge-claude">Claude</span></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="footnote">
+  <div class="footnote-text">
+    Personal assessment based on production deployment of agentic legal workflows and document automation systems. ·
+    Compliance figures from published benchmarks. · Grok benchmark data from xAI Feb 2025 launch and independent evals. ·
+    Gemini ARC-AGI-2 and GPQA figures from Google DeepMind 2025 releases. ·
+    Governance observations drawn from publicly reported incidents. ·
+    Task type and risk tolerance are the dominant variables — your mileage will vary.
+  </div>
+  <div class="footnote-author">
+    Gerry Wolfe
+    <span>Legal AI Engineer · Mar 2026</span>
+  </div>
+</div>
+</body>
+</html>
