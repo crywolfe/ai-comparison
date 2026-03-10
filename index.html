@@ -31,14 +31,14 @@
     min-height: 100vh;
   }
   .masthead {
-    max-width: 1320px;
+    max-width: 1600px;
     margin: 0 auto 44px;
     border-bottom: 2px solid var(--ink);
     padding-bottom: 24px;
   }
   .overline {
     font-family: var(--mono);
-    font-size: 13px;
+    font-size: 15px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--note);
@@ -57,7 +57,7 @@
   h1 .cop { color: var(--copilot-col); font-style: italic; }
   h1 .gem { color: var(--gemini-col);  font-style: italic; }
   .deck {
-    font-size: 16.5px;
+    font-size: 18.5px;
     line-height: 1.65;
     color: var(--note);
     max-width: 760px;
@@ -75,8 +75,35 @@
     align-items: center;
     gap: 7px;
     font-family: var(--mono);
-    font-size: 13.5px;
+    font-size: 15.5px;
     letter-spacing: 0.05em;
+    position: relative;
+    border: 1.5px solid var(--rule);
+    border-radius: 6px;
+    padding: 6px 14px 6px 10px;
+    transition: background 0.15s, border-color 0.2s, box-shadow 0.2s;
+  }
+  .legend-item::after {
+    content: 'highlight ▾';
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--note);
+    margin-left: 6px;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+  }
+  .legend-item:hover::after {
+    opacity: 1;
+  }
+  .legend-item.active::after {
+    content: 'active ✕';
+    opacity: 1;
+    color: var(--ink);
+  }
+  .legend-item:hover {
+    border-color: var(--note);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
   }
   .legend-dot {
     width: 9px; height: 9px;
@@ -84,16 +111,24 @@
     flex-shrink: 0;
   }
   .table-wrap {
-    max-width: 1320px;
+    max-width: 1600px;
     margin: 0 auto;
     overflow-x: auto;
+  }
+  .table-hint {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--note);
+    letter-spacing: 0.04em;
+    margin-bottom: 12px;
+    opacity: 0.7;
   }
   table { width: 100%; border-collapse: collapse; }
   thead tr th {
     padding: 12px 12px;
     text-align: left;
     font-family: var(--mono);
-    font-size: 12px;
+    font-size: 14px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--note);
@@ -114,13 +149,13 @@
   td {
     padding: 16px 12px;
     vertical-align: top;
-    font-size: 14.5px;
+    font-size: 16.5px;
     line-height: 1.68;
   }
   td.col-principle {
     width: 9%;
     font-family: var(--serif);
-    font-size: 15px;
+    font-size: 17px;
     line-height: 1.25;
     color: var(--ink);
     padding-right: 10px;
@@ -134,7 +169,7 @@
     width: 6%;
     padding: 16px 8px;
     font-family: var(--mono);
-    font-size: 12px;
+    font-size: 14px;
     letter-spacing: 0.05em;
     color: var(--note);
     vertical-align: middle;
@@ -144,7 +179,7 @@
     display: inline-block;
     padding: 3px 7px;
     border-radius: 3px;
-    font-size: 11.5px;
+    font-size: 13.5px;
     font-weight: 500;
     letter-spacing: 0.06em;
     white-space: nowrap;
@@ -162,7 +197,7 @@
     border-left: 2px solid #c8a03a;
     padding: 4px 9px;
     border-radius: 0 3px 3px 0;
-    font-size: 13.5px;
+    font-size: 15.5px;
     margin-top: 6px;
     color: #5a4010;
   }
@@ -172,7 +207,7 @@
     border-left: 2px solid #c85a5a;
     padding: 4px 9px;
     border-radius: 0 3px 3px 0;
-    font-size: 13.5px;
+    font-size: 15.5px;
     margin-top: 6px;
     color: #7a1a1a;
   }
@@ -182,12 +217,12 @@
     border-left: 2px solid var(--copilot-col);
     padding: 4px 9px;
     border-radius: 0 3px 3px 0;
-    font-size: 13.5px;
+    font-size: 15.5px;
     margin-top: 6px;
     color: #0a3a28;
   }
   .footnote {
-    max-width: 1320px;
+    max-width: 1600px;
     margin: 32px auto 0;
     border-top: 1px solid var(--rule);
     padding-top: 18px;
@@ -199,7 +234,7 @@
   }
   .footnote-text {
     font-family: var(--mono);
-    font-size: 12.5px;
+    font-size: 14.5px;
     color: var(--note);
     line-height: 1.9;
     flex: 1;
@@ -207,7 +242,7 @@
   }
   .footnote-author {
     font-family: var(--serif);
-    font-size: 17px;
+    font-size: 19px;
     color: var(--ink);
     text-align: right;
     white-space: nowrap;
@@ -215,17 +250,80 @@
   .footnote-author span {
     display: block;
     font-family: var(--mono);
-    font-size: 12px;
+    font-size: 14px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--note);
     margin-top: 3px;
   }
+  /* Collapse/expand rows */
+  tbody tr { cursor: pointer; }
+  tbody tr .cell-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.35s ease, opacity 0.25s ease, margin 0.25s ease;
+    margin-top: 0;
+  }
+  tbody tr.expanded .cell-content {
+    max-height: 600px;
+    opacity: 1;
+    margin-top: 6px;
+  }
+  tbody tr .cell-preview {
+    font-size: 15px;
+    color: var(--note);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 220px;
+    transition: opacity 0.2s ease;
+  }
+  tbody tr.expanded .cell-preview { opacity: 0; height: 0; overflow: hidden; }
+  td.col-principle {
+    position: relative;
+  }
+  td.col-principle .expand-hint {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--cream);
+    border: 1.5px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--note);
+    margin-left: 8px;
+    transition: transform 0.25s ease, background 0.2s ease, border-color 0.2s ease;
+    vertical-align: middle;
+    flex-shrink: 0;
+  }
+  tbody tr:hover td.col-principle .expand-hint {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
+  tr.expanded td.col-principle .expand-hint { transform: rotate(90deg); }
+
+  /* Column highlighting */
+  .legend-item { cursor: pointer; border-radius: 4px; padding: 4px 8px; transition: background 0.15s; }
+  .legend-item:hover { background: var(--cream); }
+  .legend-item.active { background: var(--cream); outline: 2px solid var(--rule); }
+  table.highlight-active td:not(.col-principle):not(.col-verdict) { opacity: 0.15; transition: opacity 0.25s ease; }
+  table.highlight-active td.col-principle,
+  table.highlight-active td.col-verdict { opacity: 1; }
+  table.highlight-active td:not(.col-principle):not(.col-verdict).highlighted { opacity: 1; transition: opacity 0.25s ease; }
+  table.highlight-active th:not(.col-principle-h):not(.col-verdict-h) { opacity: 0.3; transition: opacity 0.25s ease; }
+  table.highlight-active th:not(.col-principle-h):not(.col-verdict-h).highlighted { opacity: 1; }
+
   @media (max-width: 900px) {
-    td, th { padding: 10px 7px; font-size: 13px; }
-    td.col-principle { font-size: 14px; }
+    td, th { padding: 10px 7px; font-size: 15px; }
+    td.col-principle { font-size: 16px; }
     .footnote { flex-direction: column; }
     .footnote-author { text-align: left; }
+    tbody tr .cell-preview { max-width: 100px; }
   }
 </style>
 </head>
@@ -247,24 +345,25 @@
     just doesn't know much of anything. 😂
   </p>
   <div class="legend">
-    <div class="legend-item"><div class="legend-dot" style="background:var(--claude-col)"></div>Claude (Anthropic)</div>
-    <div class="legend-item"><div class="legend-dot" style="background:var(--gpt-col)"></div>ChatGPT (OpenAI)</div>
-    <div class="legend-item"><div class="legend-dot" style="background:var(--grok-col)"></div>Grok (xAI)</div>
-    <div class="legend-item"><div class="legend-dot" style="background:var(--copilot-col)"></div>Copilot (Microsoft)</div>
-    <div class="legend-item"><div class="legend-dot" style="background:var(--gemini-col)"></div>Gemini (Google)</div>
+    <div class="legend-item" data-col="claude"><div class="legend-dot" style="background:var(--claude-col)"></div>Claude (Anthropic)</div>
+    <div class="legend-item" data-col="gpt"><div class="legend-dot" style="background:var(--gpt-col)"></div>ChatGPT (OpenAI)</div>
+    <div class="legend-item" data-col="grok"><div class="legend-dot" style="background:var(--grok-col)"></div>Grok (xAI)</div>
+    <div class="legend-item" data-col="copilot"><div class="legend-dot" style="background:var(--copilot-col)"></div>Copilot (Microsoft)</div>
+    <div class="legend-item" data-col="gemini"><div class="legend-dot" style="background:var(--gemini-col)"></div>Gemini (Google)</div>
   </div>
 </div>
 <div class="table-wrap">
+<div class="table-hint">Click any row to expand · Click an AI name above to highlight its column</div>
 <table>
   <thead>
     <tr>
-      <th>Principle</th>
-      <th class="col-claude">🔴 Claude</th>
-      <th class="col-gpt">🔵 ChatGPT</th>
-      <th class="col-grok">⚫ Grok</th>
-      <th class="col-copilot">🟢 Copilot</th>
-      <th class="col-gemini">🟡 Gemini</th>
-      <th>Edge</th>
+      <th class="col-principle-h">Principle</th>
+      <th class="col-claude" data-col="claude">🔴 Claude</th>
+      <th class="col-gpt" data-col="gpt">🔵 ChatGPT</th>
+      <th class="col-grok" data-col="grok">⚫ Grok</th>
+      <th class="col-copilot" data-col="copilot">🟢 Copilot</th>
+      <th class="col-gemini" data-col="gemini">🟡 Gemini</th>
+      <th class="col-verdict-h">Edge</th>
     </tr>
   </thead>
   <tbody>
@@ -570,5 +669,81 @@
     <span>Legal AI Engineer · Mar 2026</span>
   </div>
 </div>
+<script>
+(function() {
+  const table = document.querySelector('table');
+  const rows = document.querySelectorAll('tbody tr');
+  const legendItems = document.querySelectorAll('.legend-item[data-col]');
+  const colMap = { claude: 1, gpt: 2, grok: 3, copilot: 4, gemini: 5 };
+
+  // -- Collapse/expand: wrap cell content dynamically --
+  rows.forEach(function(row) {
+    var cells = row.querySelectorAll('td');
+    cells.forEach(function(td, i) {
+      if (td.classList.contains('col-principle') || td.classList.contains('col-verdict')) return;
+      var text = td.textContent.trim();
+      var preview = text.substring(0, 60).replace(/\s+\S*$/, '') + '…';
+      var inner = td.innerHTML;
+      td.innerHTML =
+        '<div class="cell-preview">' + preview + '</div>' +
+        '<div class="cell-content">' + inner + '</div>';
+    });
+    // Add expand arrow to principle cell
+    var principle = row.querySelector('.col-principle');
+    if (principle) {
+      principle.innerHTML += ' <span class="expand-hint">▸</span>';
+    }
+    row.addEventListener('click', function(e) {
+      // Don't toggle when clicking links
+      if (e.target.tagName === 'A') return;
+      row.classList.toggle('expanded');
+    });
+  });
+
+  // -- Column highlighting (multi-select) --
+  var activeCols = new Set();
+
+  legendItems.forEach(function(item) {
+    item.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var col = item.getAttribute('data-col');
+      if (activeCols.has(col)) {
+        activeCols.delete(col);
+        item.classList.remove('active');
+      } else {
+        activeCols.add(col);
+        item.classList.add('active');
+      }
+      if (activeCols.size > 0) {
+        table.classList.add('highlight-active');
+      } else {
+        table.classList.remove('highlight-active');
+      }
+      applyHighlights();
+    });
+  });
+
+  function applyHighlights() {
+    // Clear all
+    table.querySelectorAll('.highlighted').forEach(function(el) {
+      el.classList.remove('highlighted');
+    });
+    // Apply for each active column
+    activeCols.forEach(function(col) {
+      // Headers
+      var ths = table.querySelectorAll('thead th');
+      ths.forEach(function(th) {
+        if (th.getAttribute('data-col') === col) th.classList.add('highlighted');
+      });
+      // Body cells
+      var idx = colMap[col];
+      rows.forEach(function(row) {
+        var cells = row.querySelectorAll('td');
+        if (cells[idx]) cells[idx].classList.add('highlighted');
+      });
+    });
+  }
+})();
+</script>
 </body>
 </html>
